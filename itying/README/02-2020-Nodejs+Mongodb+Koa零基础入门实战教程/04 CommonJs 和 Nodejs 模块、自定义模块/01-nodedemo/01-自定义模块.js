@@ -1,24 +1,11 @@
 const http = require('http');   // 引入 http 模块
 const url = require('url');     // 引入 url 模块
-// 第一种引入的方法
-// const axios = require('./node_modules/axios/index');
 
-// 第二种引入的方法
-/*
-const axios = require('axios/index');
-axios.get();
-axios.post();
-*/
 
-// 第三种引入的方法
-const axios = require('axios');
-
-// 引入 db 的模块
-const db = require('db'); // 错误，国为 nodejs 默认会找 node_modules 对应模块里的 index.js
-axios.get();
-axios.post();
-
-console.log("db: ",db); // db:  { find: [Function (anonymous)], add: [Function (anonymous)] }
+// 自定义模块
+const formatApi = (api) => {
+    return `htp://www.baidu.com/${api}`;
+}
 
 /**
  * req 获取客户端传过来的信息
@@ -50,6 +37,8 @@ const server = http.createServer((req, res) => {
 
     res.write(`<h2>你好 NodeJS！</h2>`);
 
+    const api = formatApi('api/plist');
+    res.write(api);
     res.end(); // 结束响应
 });
 
