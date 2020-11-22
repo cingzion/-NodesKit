@@ -1,28 +1,30 @@
-// 10 利用HTTP模块 URl模块 Path模块 Fs模块创建一个静态WEB服务器(上)
 const http = require('http');
-const url = require('url');
+const app = require('./module/route');
 
-
-const router = require('./module/routes');
-
-const server = http.createServer((req, res) => {
-    // 创建静态 web 服务
-    router.static(req, res, 'static');
-
-    // 路由
-    let pathname = url.parse(req.url).pathname.replace("/", "");
-
-    try{
-        router[pathname](req, res);
-    } catch (e) {
-        router['error'](req, res);
-    }
-
-
-
-
+// 注册 WEB 服务
+http.createServer(app).listen(3000, () =>{
+    console.log('服务启动成功：http://localhost:3000');
 });
 
-server.listen(3000, () => {
-    console.log("服务启动成功：http://localhost:3000");
-})
+
+
+// 配置路由
+app.get('/', (req, res) => {
+    res.writeHead(200, {'Content-Type': `text/html; charset=utf-8`});
+    res.end('首页');
+});
+
+// 配置路由
+app.get('/login', (req, res) => {
+    res.writeHead(200, {'Content-Type': `text/html; charset=utf-8`});
+    res.end('执行登陆操作');
+});
+
+// 配置路由
+app.get('/news', (req, res) => {
+    res.writeHead(200, {'Content-Type': `text/html; charset=utf-8`});
+    res.write(``)
+    res.end('新闻页面');
+});
+
+
